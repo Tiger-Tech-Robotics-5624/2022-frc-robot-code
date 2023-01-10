@@ -11,25 +11,25 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class IntakePistonSubsystem extends SubsystemBase {
-  DoubleSolenoid solenoid;
+  DoubleSolenoid intakeSolenoid;
   int counter = 0; 
   long timer = 0;
   /** Creates a new IntakePistonSubsystem. */
   public IntakePistonSubsystem() {
-    solenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH,Constants.intakeSolonoidPort1, Constants.intakeSolonoidPort2);
+    intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH,Constants.intakeSolonoidPort1, Constants.intakeSolonoidPort2);
   
   }
   public void useIntakePistons (boolean active) {
     if(active && counter == 0 && waitTime(timer)) {
-      solenoid.set(Value.kForward); 
+      intakeSolenoid.set(Value.kForward); 
       counter++;
       timer = System.currentTimeMillis();
     } 
-    if(active && counter == 1 && waitTime(timer))
-    solenoid.set(Value.kReverse);
-    counter--;
-    timer = System.currentTimeMillis();
-    
+    if(active && counter == 1 && waitTime(timer)){
+      intakeSolenoid.set(Value.kReverse);
+      counter--;
+      timer = System.currentTimeMillis();
+    }
   }
 
   private boolean waitTime (long start) {
@@ -39,11 +39,5 @@ public class IntakePistonSubsystem extends SubsystemBase {
     }
     return false;
 
-  }
-  
-  
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
   }
 }

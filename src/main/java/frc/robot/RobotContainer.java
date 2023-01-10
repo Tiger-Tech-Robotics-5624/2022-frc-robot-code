@@ -4,18 +4,20 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.AutonomousCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.MotorCommand;
 import frc.robot.commands.PistonCommand;
-import frc.robot.subsystems.ClimbPistonSubsystem;
+import frc.robot.subsystems.AutonomousSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
-import frc.robot.subsystems.GearPistonSubsystem;
 import frc.robot.subsystems.IntakePistonSubsystem;
 import frc.robot.subsystems.MotorSubsystem;
+import frc.robot.subsystems.TurretSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -26,45 +28,54 @@ import frc.robot.subsystems.MotorSubsystem;
 public class RobotContainer {
   public static XboxController xboxController;
   public static Joystick stickLeft, stickRight;
+  Compressor compressor;
+
   DriveSubsystem driveSub;
-  GearPistonSubsystem gearPistonSub;
   IntakePistonSubsystem intakePistonSub;
-  ClimbPistonSubsystem climbPistonSub;
   MotorSubsystem motorIntakeSub;
+  TurretSubsystem turretSub;
+  AutonomousSubsystem autoSub; //autonomus
 
   DriveCommand driveCmd;
   PistonCommand pistonCmd;
   MotorCommand intakeCmd;
+  AutonomousCommand autonomousCmd; //autonomus
+
   // The robot's subsystems and commands are defined here...
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    driveSub = new DriveSubsystem();
-    gearPistonSub = new GearPistonSubsystem();
-    intakePistonSub = new IntakePistonSubsystem();
-    climbPistonSub = new ClimbPistonSubsystem();
-    motorIntakeSub = new MotorSubsystem();
-    ////////////////////////////////////////////////////////////
-    driveCmd = new DriveCommand(driveSub);
-    pistonCmd = new PistonCommand(climbPistonSub, gearPistonSub, intakePistonSub);
-    intakeCmd = new MotorCommand(motorIntakeSub);
-
+    //controllers
     stickLeft = new Joystick(Constants.stickPortL);
     stickRight = new Joystick(Constants.stickPortR);
-    
     xboxController = new XboxController(Constants.xboxPort);
-  
-
-    driveSub.setDefaultCommand(driveCmd);
+      
+    //subsystems
+    driveSub = new DriveSubsystem();
+    turretSub = new TurretSubsystem();
+    //intakePistonSub = new IntakePistonSubsystem();
+    //motorIntakeSub = new MotorSubsystem();
+    autoSub = new AutonomousSubsystem(turretSub, driveSub);
     
-    gearPistonSub.setDefaultCommand(pistonCmd);
-    intakePistonSub.setDefaultCommand(pistonCmd);
-    climbPistonSub.setDefaultCommand(pistonCmd);
+    //command
+    driveCmd = new DriveCommand(driveSub);
+    //pistonCmd = new PistonCommand(intakePistonSub);
+    //intakeCmd = new MotorCommand(motorIntakeSub, turretSub);
 
-    motorIntakeSub.setDefaultCommand(intakeCmd);
+    autonomousCmd = new AutonomousCommand(autoSub, turretSub); // this needs autosub
+
+    //defailt commands
+    driveSub.setDefaultCommand(driveCmd);
+    //autoSub.setDefaultCommand(autonomousCmd);
+    //intakePistonSub.setDefaultCommand(pistonCmd);
+    //motorIntakeSub.setDefaultCommand(intakeCmd);
+
+    //compressor = new Compressor(PneumaticsModuleType.REVPH);
+    //compressor.disable();
+    //compressor.enableDigital();
+    
     // Configure the button bindings
     configureButtonBindings();
-
-
+    
   }
 
   /**
@@ -82,6 +93,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return autonomousCmd;
   }
 }

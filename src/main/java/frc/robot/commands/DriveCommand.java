@@ -13,7 +13,6 @@ public class DriveCommand extends CommandBase {
   /** Creates a new DriveCommand. */
   public DriveCommand(DriveSubsystem drive) {
     driveSub = drive;
-    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveSub);
   }
 
@@ -24,7 +23,7 @@ public class DriveCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    driveSub.drive(RobotContainer.stickLeft.getY(), RobotContainer.stickRight.getY());
+    driveSub.drive(RobotContainer.stickLeft.getY(), RobotContainer.stickRight.getY(), RobotContainer.stickRight.getZ());
   }
 
   // Called once the command ends or is interrupted.

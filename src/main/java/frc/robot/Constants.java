@@ -13,42 +13,38 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final int shooterMotor1 = 0;
-    public static final int shooterMotor2 = 1;
+    //chassi motor ports
+    public static final int CANPortR1 = 7;
+    public static final int CANPortR2 = 8;
 
-    public static final int encoderLportA = 0;
-    public static final int encoderLportB = 1;
-    public static final int encoderRportA = 2;
-    public static final int encoderRportB = 3;
+    public static final int CANPortL1 = 9;
+    public static final int CANPortL2 = 10;
 
-    public static final int vPortR1 = 0;
-    public static final int vPortR2 = 1;
-    public static final int vPortR3 = 2;
-    public static final int vPortL1 = 3;
-    public static final int vPortL2 = 4;
-    public static final int vPortL3 = 5;
-
-    public static final int stickPortL = 0;
+    //joystick ports
+    public static final int stickPortL = 2;
     public static final int stickPortR = 1;
-    public static final int xboxPort = 2;
+    
+    //xbox
+    public static final int xboxPort = 0;
 
-    public static final int solenoidPort1 = 0;
-    public static final int solenoidPort2 = 1;
-    public static final int solenoidPort3 = 2;
-    public static final int solenoidPort4 = 3;
+    //lower intake pistons
+    public static final int intakeSolonoidPort1 = 2;
+    public static final int intakeSolonoidPort2 = 3;
 
-    public static final int intakeSolonoidPort1 = 4;
-    public static final int intakeSolonoidPort2 = 5;
+    //turret motors
+    //all can id
+    public static final int shootPort1 = 0;
+    public static final int shootPort2 = 1;
+    public static final int turretRotatePort = 6;
 
-    public static final int climbSolenoidPort1 = 6;
-    public static final int climbSolenoidPort2 = 7;
-
-    public static final int gearAxis = 0;
-    public static final int intakeAxis = 1;
-    public static final int climbAxis = 2;
-
+    //intake
     public static final int intakeMotorPort = 6;
-    public static final int beltMotorPort = 7;
+
     public static final int pistonMotorPort1 = 8;
     public static final int pistonMotorPort2 = 9;
+
+    /*
+    public static final int sonicDIO1 = 1;
+    public static final int sonicDIO2 = 2;
+    */
 }

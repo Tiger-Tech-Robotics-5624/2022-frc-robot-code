@@ -6,24 +6,31 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.IntakePistonSubsystem;
+import frc.robot.subsystems.AutonomousSubsystem;
+import frc.robot.subsystems.TurretSubsystem;
 
-public class PistonCommand extends CommandBase {
-  IntakePistonSubsystem intakeSub;
-  /** Creates a new PistonCommand. */
-  public PistonCommand(IntakePistonSubsystem intakeSub) {
-    this.intakeSub = intakeSub;
-    addRequirements(this.intakeSub);
+public class AutonomousCommand extends CommandBase {
+
+  AutonomousSubsystem autoSub;
+  TurretSubsystem turret;
+
+  /** Creates a new AutonomousCommand. */
+  public AutonomousCommand(AutonomousSubsystem autoSub,TurretSubsystem turret) {
+    this.turret = turret;
+    this.autoSub = autoSub;
+    addRequirements(this.autoSub, this.turret);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+   autoSub.start();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intakeSub.useIntakePistons(RobotContainer.xboxController.getAButton());
+    autoSub.runAutonomous();
   }
 
   // Called once the command ends or is interrupted.
@@ -36,3 +43,4 @@ public class PistonCommand extends CommandBase {
     return false;
   }
 }
+
